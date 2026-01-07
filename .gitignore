@@ -1,0 +1,50 @@
+# Unity-generated folders
+[Ll]ibrary/
+[Tt]emp/
+[Oo]bj/
+[Bb]uild/
+[Bb]uilds/
+MemoryCaptures/
+sysinfo.txt
+
+# User-specific and IDE files
+UserSettings/
+.vs/
+.vscode/
+.idea/
+*.suo
+*.user
+*.userprefs
+*.pidb
+*.booproj
+*.svd
+
+# Visual Studio / Rider build files
+*.csproj
+*.unityproj
+*.sln
+*.sln.*
+*.VC.db
+
+# Logs
+*.log
+Logs/
+
+# OS generated files
+.DS_Store
+Thumbs.db
+
+# Build artifacts / packages
+*.apk
+*.aab
+*.unitypackage
+*.app
+
+# Asset Store Tools
+Assets/AssetStoreTools*
+
+# Package manager caches / locks (optional)
+Packages/packages-lock.json
+npm-debug.log
+
+# Keep .meta files (Unity requires these), do not ignore *.meta
