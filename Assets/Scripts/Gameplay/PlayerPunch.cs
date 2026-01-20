@@ -11,6 +11,8 @@ public class PlayerPunch : MonoBehaviour
     [SerializeField] private float _hitStopDuration = 0.1f;
     [SerializeField] private float _hitStopTimescale = 0.1f;
 
+    public bool IsBeingHit { get; set; }
+    
     private bool _isPunching = false;
     private HashSet<Collider> _hitEnemies = new();
     private int _enemyLayer;
@@ -39,6 +41,7 @@ public class PlayerPunch : MonoBehaviour
             {
                 HitEnemy(damageable, new DamageInfo { Amount = 1 });
             }
+
             _hitEnemies.Add(collider);
         }
     }
@@ -68,5 +71,11 @@ public class PlayerPunch : MonoBehaviour
     private void EndPunch()
     {
         _isPunching = false;
+    }
+    
+    // Animation Event
+    private void EndBeingHit()
+    {
+        IsBeingHit = false;
     }
 }

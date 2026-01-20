@@ -1,17 +1,18 @@
-using System.Collections;
+﻿using System.Collections;
 using UnityEngine;
 
-public class TestEnemy : MonoBehaviour, IDamageable
+public class EnemyBase : MonoBehaviour, IDamageable
 {
-    [SerializeField] private Animator _animator;
+    [SerializeField] protected Animator _animator;
     [SerializeField] private int _health = 5;
     [SerializeField] private Renderer[] _renderers;
-    [SerializeField] private float _FlashWhiteDuration = 0.1f;
+    [SerializeField] private float _flashWhiteDuration = 0.1f;
 
+    protected bool _isDead = false;
+    protected bool _isBeingHit = false;
     private Collider _collider;
-    private bool _isDead = false;
 
-    private void Awake()
+    protected virtual void Awake()
     {
         _collider = GetComponent<Collider>();
     }
@@ -20,6 +21,7 @@ public class TestEnemy : MonoBehaviour, IDamageable
     {
         if (_isDead) return;
 
+        _isBeingHit = true;
         Debug.Log($"{gameObject.name} took {damageInfo.Amount} damage.");
         _health -= damageInfo.Amount;
 
@@ -30,11 +32,23 @@ public class TestEnemy : MonoBehaviour, IDamageable
             _animator.SetTrigger("Die");
             _isDead = true;
             _collider.enabled = false;
+            OnDeath();
         }
         else
         {
             _animator.SetTrigger("Hit");
         }
+    }
+
+    protected virtual void OnDeath()
+    {
+        
+    }
+
+    // Animation Event
+    private void EndBeingHit()
+    {
+        _isBeingHit = false;
     }
 
     private IEnumerator FlashWhite()
@@ -44,8 +58,8 @@ public class TestEnemy : MonoBehaviour, IDamageable
             renderer.material.SetFloat("_GotHit", 1f);
         }
 
-        yield return new WaitForSecondsRealtime(_FlashWhiteDuration);
-
+        yield return new WaitForSecondsRealtime(_flashWhiteDuration);
+        
         foreach (var renderer in _renderers)
         {
             renderer.material.SetFloat("_GotHit", 0f);

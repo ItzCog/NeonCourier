@@ -11,6 +11,7 @@ public class Player : MonoBehaviour, IDamageable
     [SerializeField] private Transform _model;
     [SerializeField] private Animator _animator;
     [SerializeField] private int _health = 5;
+    [SerializeField] private PlayerPunch _playerPunch;
 
     public IInteractable InteractingObject { get; set; }
     
@@ -19,6 +20,8 @@ public class Player : MonoBehaviour, IDamageable
     private InputAction _interactAction;
     private InputAction _dashAction;
     private InputAction _punchAction;
+    
+    private bool _isDead = false;
 
     private void Awake()
     {
@@ -35,6 +38,10 @@ public class Player : MonoBehaviour, IDamageable
 
     private void Update()
     {
+        _interactText.SetActive(InteractingObject != null);
+        
+        if (_playerPunch.IsBeingHit || _isDead) return;
+        
         Vector2 moveInput = _moveAction.ReadValue<Vector2>();
 
         Vector3 movement = new(
@@ -55,17 +62,23 @@ public class Player : MonoBehaviour, IDamageable
         {
             _animator.SetBool("Running", false);
         } 
-
-        _interactText.SetActive(InteractingObject != null);
     }
 
     public void TakeDamage(DamageInfo damageInfo)
     {
+        if (_playerPunch.IsBeingHit) return;
         Debug.Log($"{gameObject.name} took {damageInfo.Amount} damage.");
         _health -= damageInfo.Amount;
         if (_health <= 0)
         {
             _animator.SetTrigger("Die");
+            _controller.enabled = false;
+            _isDead = true;
+        }
+        else
+        {
+            _animator.SetTrigger("Hit");
+            _playerPunch.IsBeingHit = true;
         }
     }
 }
