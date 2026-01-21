@@ -18,7 +18,14 @@ public class RangedEnemy : PatrolEnemyBase
         _animator.SetTrigger("Punch");
         _lastAttackTime = Time.time;
     }
-    
+
+    protected override bool CanAttack()
+    {
+        return Vector3.SqrMagnitude(_player.transform.position - transform.position) <=
+            _attackRange * _attackRange
+            && !Physics.Linecast(_hand.position, _player.transform.position, LayerMask.NameToLayer("Terrain"));
+    }
+
     // Animation Event
     private void Throw()
     {

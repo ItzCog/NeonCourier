@@ -8,7 +8,7 @@ public class PatrolEnemyBase : EnemyBase
 {
     [FormerlySerializedAs("_patrolPoints")] public Vector3[] PatrolPoints;
     [SerializeField] private float _aggroRange = 5f;
-    [SerializeField] private float _attackRange = 1f;
+    [SerializeField] protected float _attackRange = 1f;
     [FormerlySerializedAs("_punchInterval")] [SerializeField] private float _attackInterval = 1f;
 
     protected enum EnemyState
@@ -67,7 +67,7 @@ public class PatrolEnemyBase : EnemyBase
                 _agent.SetDestination(_player.transform.position);
                 _agent.isStopped = false;
                 
-                if (IsPlayerInAttackRange())
+                if (CanAttack())
                 {
                     _enemyState = EnemyState.Attack;
                 }
@@ -79,7 +79,7 @@ public class PatrolEnemyBase : EnemyBase
 
                 if (Time.time - _lastAttackTime > _attackInterval)
                 {
-                    if (IsPlayerInAttackRange())
+                    if (CanAttack())
                     {
                         Attack();
                     }
@@ -122,10 +122,9 @@ public class PatrolEnemyBase : EnemyBase
                _aggroRange * _aggroRange;
     }
     
-    private bool IsPlayerInAttackRange()
+    protected virtual bool CanAttack()
     {
-        return Vector3.SqrMagnitude(_player.transform.position - transform.position) <=
-               _attackRange * _attackRange;
+        return false;
     }
 
     protected override void OnDeath()

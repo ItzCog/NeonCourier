@@ -69,7 +69,6 @@ public class MiniBoss : EnemyBase
     // Animation Event
     private void Cast()
     {
-        print("attack");
         Instantiate(spellPrefab, _player.transform.position, Quaternion.identity);
     }
 

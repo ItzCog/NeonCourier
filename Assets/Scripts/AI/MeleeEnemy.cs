@@ -50,6 +50,12 @@ public class MeleeEnemy : PatrolEnemyBase
         _lastAttackTime = Time.time;
     }
 
+    protected override bool CanAttack()
+    {
+        return Vector3.SqrMagnitude(_player.transform.position - transform.position) <=
+               _attackRange * _attackRange;
+    }
+
     // Animation Event
     private void StartPunch()
     {
