@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -12,6 +13,7 @@ public class Player : MonoBehaviour, IDamageable
     [SerializeField] private Animator _animator;
     [SerializeField] private int _health = 5;
     [SerializeField] private PlayerPunch _playerPunch;
+    [SerializeField] private float _invincibilityDuration = 2f;
 
     public IInteractable InteractingObject { get; set; }
     
@@ -22,6 +24,7 @@ public class Player : MonoBehaviour, IDamageable
     private InputAction _punchAction;
     
     private bool _isDead = false;
+    private bool _isInvincible = false;
 
     private void Awake()
     {
@@ -66,6 +69,7 @@ public class Player : MonoBehaviour, IDamageable
 
     public void TakeDamage(DamageInfo damageInfo)
     {
+        if (_isInvincible) return;
         if (_playerPunch.IsBeingHit) return;
         Debug.Log($"{gameObject.name} took {damageInfo.Amount} damage.");
         _health -= damageInfo.Amount;
@@ -79,6 +83,14 @@ public class Player : MonoBehaviour, IDamageable
         {
             _animator.SetTrigger("Hit");
             _playerPunch.IsBeingHit = true;
+            _isInvincible = true;
+            StartCoroutine(RemoveInvincibility());
         }
+    }
+
+    private IEnumerator RemoveInvincibility()
+    {
+        yield return new WaitForSecondsRealtime(_invincibilityDuration);
+        _isInvincible = false;
     }
 }

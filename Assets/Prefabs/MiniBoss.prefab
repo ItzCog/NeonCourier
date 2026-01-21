@@ -1176,7 +1176,7 @@ SkinnedMeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 16edf9c3cdaa1b747b592378b3221a53, type: 2}
+  - {fileID: 2100000, guid: c6848bf77bac8914db55ff271af84fe7, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1601,7 +1601,7 @@ SkinnedMeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 8ae11437d8a4f1f45b670c782fc30929, type: 2}
+  - {fileID: 2100000, guid: 90023c565b681144b8dda22c2b2b73c4, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1857,9 +1857,9 @@ GameObject:
   - component: {fileID: 2031772152197394231}
   - component: {fileID: 3450494397352264667}
   - component: {fileID: 3107830412614985156}
-  - component: {fileID: 7232280882329626084}
+  - component: {fileID: 7254391231429196959}
   m_Layer: 3
-  m_Name: MeleeEnemy
+  m_Name: MiniBoss
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1893,7 +1893,7 @@ Animator:
   m_GameObject: {fileID: 6283493005560193369}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 2ca76a580eedba34c9dca602c1dbfe8d, type: 2}
+  m_Controller: {fileID: 9100000, guid: b6acf3a2894cb6642804d4fc299245d1, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -1937,7 +1937,7 @@ NavMeshAgent:
   m_Enabled: 1
   m_AgentTypeID: 0
   m_Radius: 0.5
-  m_Speed: 3
+  m_Speed: 4
   m_Acceleration: 80
   avoidancePriority: 50
   m_AngularSpeed: 900
@@ -1949,7 +1949,7 @@ NavMeshAgent:
   m_BaseOffset: 0
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
---- !u!114 &7232280882329626084
+--- !u!114 &7254391231429196959
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1958,20 +1958,18 @@ MonoBehaviour:
   m_GameObject: {fileID: 6283493005560193369}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6061e8b0f72349a7abee6d5417dac52b, type: 3}
+  m_Script: {fileID: 11500000, guid: da9cbf24f2ce2cf4fb96ac71507b8cca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _animator: {fileID: 0}
-  _health: 5
+  _animator: {fileID: 2031772152197394231}
+  _health: 8
   _renderers:
   - {fileID: 4000194120228295743}
   - {fileID: 5889910109297253372}
   _flashWhiteDuration: 0.1
-  PatrolPoints: []
-  _aggroRange: 5
-  _attackRange: 1.35
-  _attackInterval: 2
-  _punch: {fileID: 1960059763245445519}
+  spellPrefab: {fileID: 5200533782156659465, guid: 475f3935029f86f41a8d9c20f2ec9f69, type: 3}
+  _aggroRange: 8
+  _attackRange: 4
 --- !u!1 &6405115810121814206
 GameObject:
   m_ObjectHideFlags: 0

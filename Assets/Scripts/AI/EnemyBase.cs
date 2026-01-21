@@ -17,7 +17,7 @@ public class EnemyBase : MonoBehaviour, IDamageable
         _collider = GetComponent<Collider>();
     }
 
-    public void TakeDamage(DamageInfo damageInfo)
+    public virtual void TakeDamage(DamageInfo damageInfo)
     {
         if (_isDead) return;
 

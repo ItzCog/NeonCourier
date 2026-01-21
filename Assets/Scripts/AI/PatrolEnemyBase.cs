@@ -112,7 +112,7 @@ public class PatrolEnemyBase : EnemyBase
             _agent.stoppingDistance * _agent.stoppingDistance)
         {
             _currentPatrolIndex = (_currentPatrolIndex + 1) % PatrolPoints.Length;
-            print("Arrived");
+            // print("Arrived");
         }
     }
 
