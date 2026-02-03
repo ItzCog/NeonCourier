@@ -347,6 +347,8 @@ MonoBehaviour:
   _model: {fileID: 5223251077295187384}
   _animator: {fileID: 9018402116924733374}
   _health: 5
+  _playerPunch: {fileID: 1396563062601837354}
+  _invincibilityDuration: 2
 --- !u!1001 &5761808523791319635
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -456,12 +458,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 66a1b47e871768148ac51b758b578dc8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _punchCollider: {fileID: 0}
   _punchHand: {fileID: 6989483220016708643}
   _punchRadius: 0.1
   _cameraShakeAmplitude: 1.5
   _cameraShakeDuration: 0.05
-  _hitStopDuration: 0.1
+  _hitStopDuration: 0.45
   _hitStopTimescale: 0.1
 --- !u!4 &5223251077295187384 stripped
 Transform:
