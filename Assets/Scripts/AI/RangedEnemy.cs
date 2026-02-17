@@ -32,11 +32,12 @@ public class RangedEnemy : PatrolEnemyBase
         var direction = _player.transform.position - _hand.position + Vector3.up * 1f;
         direction.Normalize();
         
-        Instantiate(
+        var projectile = Instantiate(
             _projectilePrefab,
             _hand.position,
             Quaternion.LookRotation(direction)
         );
+        projectile.GetComponent<Projectile>().damage = _enemyData.damage;
     }
 }
 

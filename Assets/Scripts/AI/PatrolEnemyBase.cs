@@ -9,7 +9,6 @@ public class PatrolEnemyBase : EnemyBase
     [FormerlySerializedAs("_patrolPoints")] public Vector3[] PatrolPoints;
     [SerializeField] private float _aggroRange = 5f;
     [SerializeField] protected float _attackRange = 1f;
-    [FormerlySerializedAs("_punchInterval")] [SerializeField] private float _attackInterval = 1f;
 
     protected enum EnemyState
     {
@@ -22,12 +21,16 @@ public class PatrolEnemyBase : EnemyBase
     
     protected float _lastAttackTime;
     private int _currentPatrolIndex = 0;
+    private float _attackInterval;
 
     protected override void Awake()
     {
         base.Awake();
         _animator = GetComponent<Animator>();
         _agent = GetComponent<NavMeshAgent>();
+        _agent.speed = _enemyData.moveSpeed;
+
+        _attackInterval = _enemyData.attackInterval;
     }
 
     private void Start()

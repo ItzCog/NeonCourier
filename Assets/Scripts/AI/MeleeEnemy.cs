@@ -33,7 +33,7 @@ public class MeleeEnemy : PatrolEnemyBase
         {
             if (!collider.TryGetComponent<Player>(out var player)) continue;
             
-            player.TakeDamage(new DamageInfo { Amount = 1 });
+            player.TakeDamage(new DamageInfo { Amount = _enemyData.damage });
             _isPunching = false;
             break;
         }

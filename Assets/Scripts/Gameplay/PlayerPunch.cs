@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class PlayerPunch : MonoBehaviour
@@ -10,6 +11,8 @@ public class PlayerPunch : MonoBehaviour
     [SerializeField] private float _cameraShakeDuration = 0.05f;
     [SerializeField] private float _hitStopDuration = 0.1f;
     [SerializeField] private float _hitStopTimescale = 0.1f;
+    [SerializeField] private WeaponData _weaponData;
+    [SerializeField] private TMP_Text _dpsText;
 
     public bool IsBeingHit { get; set; }
     
@@ -18,10 +21,33 @@ public class PlayerPunch : MonoBehaviour
     private int _enemyLayer;
     private GameCamera _camera;
 
+    private struct DamageTime
+    {
+        public int Damage;
+        public float Time;
+    }
+    private Queue<DamageTime> _damageQueue = new();
+
     private void Start()
     {
         _enemyLayer = LayerMask.GetMask("Enemies");
         _camera = GameCamera.Instance;
+    }
+
+    private void Update()
+    {
+        while (_damageQueue.Count > 0 && Time.time - _damageQueue.Peek().Time > 1f)
+        {
+            _damageQueue.Dequeue();
+        }
+
+        float dps = 0f;
+        foreach (var entry in _damageQueue)
+        {
+            dps += entry.Damage;
+        }
+
+        _dpsText.text = $"{dps} dps";
     }
 
     private void FixedUpdate()
@@ -39,7 +65,8 @@ public class PlayerPunch : MonoBehaviour
             if (_hitEnemies.Contains(collider)) continue;
             if (collider.TryGetComponent<IDamageable>(out var damageable))
             {
-                HitEnemy(damageable, new DamageInfo { Amount = 1 });
+                HitEnemy(damageable, new DamageInfo { Amount = _weaponData.damage });
+                _damageQueue.Enqueue(new DamageTime { Damage = _weaponData.damage, Time = Time.time });
             }
 
             _hitEnemies.Add(collider);

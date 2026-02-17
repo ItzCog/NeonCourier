@@ -1962,7 +1962,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _animator: {fileID: 0}
-  _health: 5
+  _enemyData: {fileID: 11400000, guid: 6c72c45187b4ad845b6cf4137d68cbee, type: 2}
   _renderers:
   - {fileID: 4000194120228295743}
   - {fileID: 5889910109297253372}
@@ -1970,7 +1970,6 @@ MonoBehaviour:
   PatrolPoints: []
   _aggroRange: 5
   _attackRange: 1.35
-  _attackInterval: 2
   _punch: {fileID: 1960059763245445519}
 --- !u!1 &6405115810121814206
 GameObject:

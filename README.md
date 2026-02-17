@@ -7,3 +7,9 @@ Action combat system prototype, aimed to explore the implementation of high comb
 - WASD to move
 - E to interact
 - Left click to punch
+
+# Updates
+
+## Feb 18, 2026
+- Added DPS counter
+- Refactored code to use Scriptable Objects
