@@ -122,7 +122,7 @@ public class PatrolEnemyBase : EnemyBase
     private bool IsPlayerInAggroRange()
     {
         return Vector3.SqrMagnitude(_player.transform.position - transform.position) <=
-               _aggroRange * _aggroRange;
+               _enemyData.chaseRange * _enemyData.chaseRange;
     }
     
     protected virtual bool CanAttack()
@@ -144,10 +144,10 @@ public class PatrolEnemyBase : EnemyBase
     private void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.yellow;
-        Gizmos.DrawWireSphere(transform.position, _aggroRange);
+        Gizmos.DrawWireSphere(transform.position, _enemyData.chaseRange);
         
         Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(transform.position, _attackRange);
+        Gizmos.DrawWireSphere(transform.position, _enemyData.attackRange);
     }
 }
 
