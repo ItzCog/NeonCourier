@@ -2010,7 +2010,7 @@ PrefabInstance:
     - target: {fileID: 3265356999092539778, guid: 8dd0fd6ead38f954293c0251ee9dfda9, type: 3}
       propertyPath: _weaponData
       value: 
-      objectReference: {fileID: 11400000, guid: 97c49e65dcb0c5441a2b7b97d9c545f0, type: 2}
+      objectReference: {fileID: 11400000, guid: 85d40a0439b6ffe48bfcf06cef97c9e9, type: 2}
     - target: {fileID: 4645743663575522598, guid: 8dd0fd6ead38f954293c0251ee9dfda9, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0

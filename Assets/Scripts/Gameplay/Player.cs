@@ -172,6 +172,8 @@ public class Player : MonoBehaviour, IDamageable
 
     private void Punch()
     {
+        if (_lastAttackTime + _weaponData.attackInterval > Time.time) return;
+        
         _lastAttackTime = Time.time;
         _animator.SetTrigger("Punch");
         _isPunching = true;
@@ -180,6 +182,7 @@ public class Player : MonoBehaviour, IDamageable
     private void EndPunch()
     {
         _isPunching = false;
+        _hitEnemies.Clear();
     }
     
     private void EndBeingHit()
