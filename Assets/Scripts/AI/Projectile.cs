@@ -4,8 +4,9 @@ using UnityEngine;
 public class Projectile : MonoBehaviour
 {
     [SerializeField] private float _speed = 1f;
-    
-    public int damage { get; set; }
+
+
+    public DamageInfo DamageInfo;
     
     private void Update()
     {
@@ -16,7 +17,7 @@ public class Projectile : MonoBehaviour
     {
         if (other.TryGetComponent<Player>(out var player))
         {
-            player.TakeDamage(new DamageInfo { Amount = 1 });
+            player.TakeDamage(DamageInfo);
             Destroy(gameObject);
         }
         else if (other.gameObject.isStatic)

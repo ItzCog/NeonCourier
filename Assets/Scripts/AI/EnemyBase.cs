@@ -1,7 +1,8 @@
 ﻿using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyBase : MonoBehaviour, IDamageable
+public class EnemyBase : MonoBehaviour, IDamageable, IDamageSource
 {
     [SerializeField] protected Animator _animator;
     [SerializeField] protected EnemyData _enemyData;
@@ -25,8 +26,10 @@ public class EnemyBase : MonoBehaviour, IDamageable
         if (_isDead) return;
 
         _isBeingHit = true;
-        Debug.Log($"{gameObject.name} took {damageInfo.Amount} damage.");
-        _health -= damageInfo.Amount;
+        
+        int damage = DamageCalculator.Calculate(damageInfo.source.Modifiers, null, damageInfo);
+        Debug.Log($"{gameObject.name} took {damage} damage.");
+        _health -= damage;
 
         StartCoroutine(FlashWhite());
 
@@ -42,6 +45,8 @@ public class EnemyBase : MonoBehaviour, IDamageable
             _animator.SetTrigger("Hit");
         }
     }
+
+    public List<Modifier> Modifiers => new();
 
     protected virtual void OnDeath()
     {

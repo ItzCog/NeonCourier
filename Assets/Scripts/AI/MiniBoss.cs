@@ -69,7 +69,8 @@ public class MiniBoss : EnemyBase
     // Animation Event
     private void Cast()
     {
-        Instantiate(spellPrefab, _player.transform.position, Quaternion.identity);
+        var spell = Instantiate(spellPrefab, _player.transform.position, Quaternion.identity).GetComponent<Spell>();
+        spell.Owner = this;
     }
 
     // Animation Event

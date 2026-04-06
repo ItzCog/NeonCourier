@@ -5,6 +5,8 @@ public class Spell : MonoBehaviour
 {
     [SerializeField] private float _duration = 1f;
 
+    public IDamageSource Owner;
+    
     private Collider _collider;
     
     private void Awake()
@@ -23,7 +25,7 @@ public class Spell : MonoBehaviour
         {
             if (result.TryGetComponent<Player>(out var player))
             {
-                player.TakeDamage(new DamageInfo {Amount = 3});
+                player.TakeDamage(new DamageInfo(3, Owner, DamageInfo.DamageType.Skill));
                 break;
             }
         }

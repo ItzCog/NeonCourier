@@ -1,12 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.ComponentModel;
 using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
 [RequireComponent(typeof(CharacterController))]
-public class Player : MonoBehaviour, IDamageable
+public class Player : MonoBehaviour, IDamageable, IDamageSource
 {
     [SerializeField] private float _speed;
     [SerializeField] private float _dashSpeed;
@@ -47,6 +48,8 @@ public class Player : MonoBehaviour, IDamageable
         public float Time;
     }
     private Queue<DamageTime> _damageQueue = new();
+
+    private int _damageBoostTest = 1;
 
     private void Awake()
     {
@@ -110,6 +113,24 @@ public class Player : MonoBehaviour, IDamageable
         }
 
         _dpsText.text = $"{dps} dps";
+        
+        
+        // Testing
+        if (Input.GetKeyDown(KeyCode.Alpha1))
+        {
+            print("No damage boost");
+            _damageBoostTest = 1;
+        }
+        else if (Input.GetKeyDown(KeyCode.Alpha2))
+        {
+            print("+5 damage");
+            _damageBoostTest = 2;
+        }
+        else if (Input.GetKeyDown(KeyCode.Alpha3))
+        {
+            print("+10% damage");
+            _damageBoostTest = 3;
+        }
     }
 
     private void FixedUpdate()
@@ -127,20 +148,30 @@ public class Player : MonoBehaviour, IDamageable
             if (_hitEnemies.Contains(collider)) continue;
             if (collider.TryGetComponent<IDamageable>(out var damageable))
             {
-                HitEnemy(damageable, new DamageInfo { Amount = _weaponData.damage });
-                _damageQueue.Enqueue(new DamageTime { Damage = _weaponData.damage, Time = Time.time });
+                var info = new DamageInfo(_weaponData.damage, this, DamageInfo.DamageType.Physical);
+                HitEnemy(damageable, info);
+                _damageQueue.Enqueue(new DamageTime { Damage = DamageCalculator.Calculate(Modifiers, new(),
+                    info), Time = Time.time });
             }
 
             _hitEnemies.Add(collider);
         }
     }
 
+    public List<Modifier> Modifiers => _damageBoostTest switch
+    {
+        1 => new List<Modifier>(),
+        2 => new List<Modifier> { new (Modifier.Type.Flat, 5) },
+        3 => new List<Modifier> { new (Modifier.Type.Percent, 10) },
+        _ => throw new InvalidEnumArgumentException()
+    };
+
     public void TakeDamage(DamageInfo damageInfo)
     {
         if (_isInvincible) return;
         if (_isBeingHit) return;
-        Debug.Log($"{gameObject.name} took {damageInfo.Amount} damage.");
-        _health -= damageInfo.Amount;
+        Debug.Log($"{gameObject.name} took {damageInfo.baseDamage} damage.");
+        _health -= damageInfo.baseDamage;
         if (_health <= 0)
         {
             _animator.SetTrigger("Die");

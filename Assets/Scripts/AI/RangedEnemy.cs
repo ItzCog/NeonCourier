@@ -37,7 +37,7 @@ public class RangedEnemy : PatrolEnemyBase
             _hand.position,
             Quaternion.LookRotation(direction)
         );
-        projectile.GetComponent<Projectile>().damage = _enemyData.damage;
+        projectile.GetComponent<Projectile>().DamageInfo = new DamageInfo(_enemyData.damage, this, DamageInfo.DamageType.Projectile);
     }
 }
 
