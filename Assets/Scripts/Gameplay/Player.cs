@@ -157,6 +157,18 @@ public class Player : MonoBehaviour, IDamageable, IDamageSource
             _hitEnemies.Add(collider);
         }
     }
+    
+    public int GetHealth() => _health;
+    public WeaponData GetWeapon() => _weaponData;
+    public void SetDamage(int value)
+    {
+        _weaponData.damage = value; 
+    }
+
+    public void SetSpeed(float value)
+    {
+        _speed = value;
+    }
 
     public List<Modifier> Modifiers => _damageBoostTest switch
     {
@@ -185,6 +197,8 @@ public class Player : MonoBehaviour, IDamageable, IDamageSource
             _isInvincible = true;
             StartCoroutine(RemoveInvincibility());
         }
+        
+        DamageCalculator.DamageDealt(damageInfo.source, this, damageInfo.baseDamage);
     }
     
     private void HitEnemy(IDamageable damageable, DamageInfo damageInfo)

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 public static class DamageCalculator
@@ -8,17 +9,25 @@ public static class DamageCalculator
             int flat = 0, percent = 0, reduction = 0;
             foreach (var mod in attackerState)
             {
-                  if (mod.type == Modifier.Type.Flat)
+                  switch (mod.type)
                   {
-                        flat += mod.amount;
-                  }
-                  else
-                  {
-                        percent += mod.amount;
+                        case Modifier.Type.Flat:
+                              flat += mod.amount;
+                              break;
+                        case Modifier.Type.Percent:
+                              percent += mod.amount;
+                              break;
                   }
             }
             
             int damage = Mathf.RoundToInt((info.baseDamage + flat) * (1 + percent * 0.01f));
             return Mathf.Max(1, damage);
+      }
+
+      public static event Action<IDamageSource, IDamageable, int> OnDamageDealt;
+
+      public static void DamageDealt(IDamageSource dealer, IDamageable receiver, int amount)
+      {
+            OnDamageDealt?.Invoke(dealer, receiver, amount);
       }
 }

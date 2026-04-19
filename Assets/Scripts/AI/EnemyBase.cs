@@ -44,6 +44,8 @@ public class EnemyBase : MonoBehaviour, IDamageable, IDamageSource
         {
             _animator.SetTrigger("Hit");
         }
+        
+        DamageCalculator.DamageDealt(damageInfo.source, this, damageInfo.baseDamage);
     }
 
     public List<Modifier> Modifiers => new();
