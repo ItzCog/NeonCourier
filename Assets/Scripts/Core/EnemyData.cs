@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -11,5 +12,11 @@ public class EnemyData : ScriptableObject
     public float chaseRange = 5f;
     public float attackRange = 1f;
 
-    public List<GameObject> itemDrops;
+    [Serializable]
+    public class WeaponDropEntry
+    {
+        public WeaponData data;
+        public float prob;
+    }
+    public List<WeaponDropEntry> weaponDrops;
 }

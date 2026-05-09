@@ -12,7 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9cd62ec4214272c4a84fad02d0b933bb, type: 3}
   m_Name: Punch
   m_EditorClassIdentifier: 
+  displayName: Punch
   damage: 10
   attackInterval: 0
   range: 0
+  hitBoxRadius: 0.1
   vfx: {fileID: 0}
+  attackAnim: {fileID: -203655887218126122, guid: 717c10db8d3159d44ac1c4acd6405ec2, type: 3}
+  dropPrefab: {fileID: 0}

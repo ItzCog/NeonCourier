@@ -11,6 +11,7 @@ public class EnemyBase : MonoBehaviour, IDamageable, IDamageSource
 
     protected bool _isDead = false;
     protected bool _isBeingHit = false;
+    protected GameObject _player;
     
     private float _health;
     private Collider _collider;
@@ -19,6 +20,11 @@ public class EnemyBase : MonoBehaviour, IDamageable, IDamageSource
     {
         _collider = GetComponent<Collider>();
         _health = _enemyData.health;
+    }
+    
+    private void Start()
+    {
+        _player = GameObject.FindGameObjectWithTag("Player");
     }
 
     public virtual void TakeDamage(DamageInfo damageInfo)
@@ -52,7 +58,27 @@ public class EnemyBase : MonoBehaviour, IDamageable, IDamageSource
 
     protected virtual void OnDeath()
     {
-        
+        SpawnDrop();
+    }
+
+    private void SpawnDrop()
+    {
+        if (_enemyData.weaponDrops.Count == 0) return;
+        float p = Random.Range(0f, 1f);
+        WeaponData drop = null;
+        foreach (var entry in _enemyData.weaponDrops)
+        {
+            p -= entry.prob;
+            if (p < 0f)
+            {
+                drop = entry.data;
+                break;
+            }
+        }
+
+        if (drop == null || drop == _player.GetComponent<Player>()._weaponData) return;
+        var dropObj = Instantiate(drop.dropPrefab, transform.position, Quaternion.identity);
+        dropObj.GetComponent<WeaponDrop>().data = drop;
     }
 
     // Animation Event

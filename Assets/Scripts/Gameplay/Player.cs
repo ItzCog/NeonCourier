@@ -18,13 +18,15 @@ public class Player : MonoBehaviour, IDamageable, IDamageSource
     [SerializeField] private int _health = 5;
     [SerializeField] private PlayerPunch _playerPunch;
     [SerializeField] private float _invincibilityDuration = 2f;
-    [SerializeField] private WeaponData _weaponData;
+    public WeaponData _weaponData;
     [SerializeField] private TMP_Text _dpsText;
+    [SerializeField] private TMP_Text _weaponText;
     [SerializeField] private Transform _punchHand;
 
     public IInteractable InteractingObject { get; set; }
     
     private CharacterController _controller;
+    private AnimatorOverrideController _override;
     private InputAction _moveAction;
     private InputAction _interactAction;
     private InputAction _dashAction;
@@ -65,8 +67,12 @@ public class Player : MonoBehaviour, IDamageable, IDamageSource
         _interactAction.performed += _ => InteractingObject?.Interact();
         _punchAction.performed += _ => Punch();
 
+        _playerPunch.StartedPunch += StartPunch;
         _playerPunch.EndedPunch += EndPunch;
         _playerPunch.EndedBeingHit += EndBeingHit;
+        
+        _override = new AnimatorOverrideController(_animator.runtimeAnimatorController);
+        _animator.runtimeAnimatorController = _override;
     }
     
     private void Start()
@@ -182,6 +188,7 @@ public class Player : MonoBehaviour, IDamageable, IDamageSource
     {
         if (_isInvincible) return;
         if (_isBeingHit) return;
+        _isPunching = false;
         Debug.Log($"{gameObject.name} took {damageInfo.baseDamage} damage.");
         _health -= damageInfo.baseDamage;
         if (_health <= 0)
@@ -221,6 +228,11 @@ public class Player : MonoBehaviour, IDamageable, IDamageSource
         
         _lastAttackTime = Time.time;
         _animator.SetTrigger("Punch");
+        // _isPunching = true;
+    }
+
+    private void StartPunch()
+    {
         _isPunching = true;
     }
 
@@ -239,5 +251,12 @@ public class Player : MonoBehaviour, IDamageable, IDamageSource
     {
         yield return new WaitForSecondsRealtime(_invincibilityDuration);
         _isInvincible = false;
+    }
+
+    public void Equip(WeaponData weapon)
+    {
+        _weaponData = weapon;
+        _override["LeadJab"] = weapon.attackAnim;
+        _weaponText.text = $"Current Weapon: {weapon.displayName}";
     }
 }

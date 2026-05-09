@@ -13,9 +13,11 @@ MonoBehaviour:
   m_Name: MeleeEnemy
   m_EditorClassIdentifier: 
   health: 50
-  damage: 20
+  damage: 15
   moveSpeed: 3.5
   attackInterval: 2
   chaseRange: 5
   attackRange: 1
-  itemDrops: []
+  weaponDrops:
+  - data: {fileID: 11400000, guid: 85d40a0439b6ffe48bfcf06cef97c9e9, type: 2}
+    prob: 1

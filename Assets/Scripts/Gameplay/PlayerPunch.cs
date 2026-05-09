@@ -3,13 +3,14 @@ using UnityEngine;
 
 public class PlayerPunch : MonoBehaviour
 {
+    public event Action StartedPunch;
     public event Action EndedPunch;
     public event Action EndedBeingHit;
     
     // Animation Event
     private void StartPunch()
     {
-
+        StartedPunch();
     }
 
     // Animation Event

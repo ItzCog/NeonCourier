@@ -16,7 +16,6 @@ public class PatrolEnemyBase : EnemyBase
     }
 
     protected EnemyState _enemyState = EnemyState.Patrol;
-    protected GameObject _player;
     private NavMeshAgent _agent;
     
     protected float _lastAttackTime;
@@ -31,11 +30,6 @@ public class PatrolEnemyBase : EnemyBase
         _agent.speed = _enemyData.moveSpeed;
 
         _attackInterval = _enemyData.attackInterval;
-    }
-
-    private void Start()
-    {
-        _player = GameObject.FindGameObjectWithTag("Player");
     }
     
     protected virtual void Update()

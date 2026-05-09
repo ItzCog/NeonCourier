@@ -36,8 +36,16 @@ public class DebugManager : MonoBehaviour
         room.text = $"{FindObjectsOfType<EnemyBase>().Length} enemies";
     }
 
+    private bool isEnabled;
     private void Update()
     {
+        if (Input.GetKeyDown(KeyCode.F1))
+        {
+            isEnabled = GetComponent<Canvas>().enabled = !GetComponent<Canvas>().enabled;
+        }
+
+        if (!isEnabled) return;
+        
         playerHealth.text = $"Player Health = {_player.GetHealth()}";
         playerWeapon.text = $"Weapon = {_player.GetWeapon().name}";
         
@@ -55,11 +63,6 @@ public class DebugManager : MonoBehaviour
             2 => 2f,
             _ => 1f
         };
-
-        if (Input.GetKeyDown(KeyCode.F1))
-        {
-            GetComponent<Canvas>().enabled = !GetComponent<Canvas>().enabled;
-        }
     }
 
     private void OnDamageDealt(IDamageSource dealer, IDamageable receiver, int amount)

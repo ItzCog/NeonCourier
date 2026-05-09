@@ -13,9 +13,8 @@ MonoBehaviour:
   m_Name: RangedEnemy
   m_EditorClassIdentifier: 
   health: 50
-  damage: 15
+  damage: 10
   moveSpeed: 5.5
   attackInterval: 3
   chaseRange: 5
   attackRange: 5.5
-  itemDrops: []
